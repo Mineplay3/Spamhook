@@ -11,11 +11,19 @@ root.resizable(False, False)
 
 async def send():
     usernam = username.get()
+    
+    if usernam == "":
+        usernam = "https://github.com/Mineplay3/SpamHook"
 
-    print(usernam)
+    url = webhook.get()
+    
+    if url == "":
+        messagebox.showerror(title="Invalid Webhook Url", message="You need to specify a webhook")
+        return
 
-    if usernam == None:
-        usernam = "Spamhook"
+    if "https://discord.com/api/" not in url:
+        messagebox.showerror(title="Invalid Webhook Url", message="Invalid Webhook url")
+        return
 
     json = {
         'username': usernam,
@@ -23,18 +31,13 @@ async def send():
     }
     a = 0
 
-    root.iconify()
-
-    alert = messagebox.showinfo(title="test", message="pog")
 
     while a <= amount.get():
         pog = requests.post("https://discord.com/api/v8/webhooks/819653001236971541/L9tsN3qft4sbb1NuVEoLFGMpsfDohpBstf03n31ohJGr-yJ_K7a2vQ2jYoQyBMQLHDMI?wait=false", json=json)
         a +=1
         root.update()
         
-    
-    root.deiconify()
-    return
+        return
 
         
 def starter():
@@ -69,6 +72,7 @@ amount.set(1)
 def textup4():
     text4 = Label(root, text=f"Spam Quantity ({amount.get()})")
     text4.grid(row=4, column=1)
+    root.update()
     root.after(10, textup4) 
 
 textup4()
@@ -80,6 +84,7 @@ delay.set(10)
 def textup5():
     text5 = Label(root, text=f"Spam Delay ({delay.get()} ms)")
     text5.grid(row=5, column=1)
+    root.update()
     root.after(10, textup5) 
 
 textup5()
@@ -90,7 +95,9 @@ img1 = PhotoImage(file="Images/spam.png")
 start.config(image=img1)
 
 close = Button(root, text="Close", command=root.destroy, borderwidth=0, background="#36393f")
-close.grid(row=7, column=2, columnspan=1)
+close.grid(row=8, column=2, columnspan=1)
+img2 = PhotoImage(file="Images/close.png")
+close.config(image=img2)
 
 def clear():
     amount.set(1)
@@ -99,7 +106,9 @@ def clear():
     message.delete(0, 'end')
     username.delete(0, 'end')
 
-clear = Button(root, text="Clear", command=clear, background="#43b581")
+clear = Button(root, text="Clear", command=clear, borderwidth=0, background="#36393f")
 clear.grid(row=7, column=2, columnspan=2)
+img3 = PhotoImage(file="Images/clear.png")
+clear.config(image=img3)
 
 root.mainloop()
