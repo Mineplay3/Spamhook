@@ -2,12 +2,25 @@ from tkinter import *
 from tkinter import messagebox
 import json
 import requests
+import webbrowser
 import asyncio
 
 root = Tk()
 root.attributes('-topmost', True)
 root.geometry('400x400')
 root.resizable(False, False)
+main_menu = Menu(root)
+menubar = Menu(main_menu, tearoff=0)
+main_menu.add_cascade(label="Info", menu=menubar)
+
+def github():
+    webbrowser.open('https://github.com/Mineplay3/SpamHook')
+
+menubar.add_command(label="Github Source", command=github)
+menubar.add_separator()
+menubar.add_command(label="Made by: Mineplay3")
+
+root.config(menu=main_menu)
 
 async def send():
     usernam = username.get()
